@@ -1,0 +1,14 @@
+{
+    "status": true,
+    "message": null,
+    "bookingData": {
+        "serviceName": "خدمه نقاش",
+        "clientName": "دعاء جمال",
+        "clientPhone": "01126427066",
+        "clientAdress": "قنا",
+        "selectedAddress": "قنا",
+        "clientDescription": "عايز اشطب شقه كامله 4 غرف",
+        "date": "11-2-2023 3:2 am",
+        "url": "assets/images/homeRepaire2.jpg"
+    }
+}

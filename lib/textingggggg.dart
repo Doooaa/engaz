@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+
 
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
@@ -28,7 +28,7 @@ class MyWidget extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Stack(
@@ -44,7 +44,7 @@ class MyWidget extends StatelessWidget {
                     color: Color.fromARGB(182, 145, 139, 137),
                     height: 50,
                     width: 200,
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       "نجار",
                       style: TextStyle(fontSize: 30, color: Colors.white),
@@ -56,7 +56,7 @@ class MyWidget extends StatelessWidget {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
+                SizedBox(
                   height: 200,
                   width: 200,
                   child: Image.asset('assets/images/char5.png'),
@@ -97,45 +97,9 @@ class MyWidget extends StatelessWidget {
       children: containerList,
     );
 */
-class MyCarouselSlider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: MediaQuery.of(context).size.height * 0.25,
-        enlargeCenterPage: true,
-        autoPlay: true,
-        // aspectRatio: 16/9,
-        autoPlayAnimationDuration: const Duration(seconds: 1),
-        autoPlayInterval: const Duration(seconds: 2),
-        autoPlayCurve: Curves.fastLinearToSlowEaseIn,
 
-        enableInfiniteScroll: true,
 
-        viewportFraction: 0.8,
-      ),
-      items: [1, 2, 3, 4, 5].map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: const BoxDecoration(
-                color: Colors.amber,
-              ),
-              child: Center(
-                child: Text(
-                  'Item $i',
-                  style: const TextStyle(fontSize: 16.0),
-                ),
-              ),
-            );
-          },
-        );
-      }).toList(),
-    );
-  }
-}
+
 /*
       Padding(
                   padding: const EdgeInsets.all(10.0),

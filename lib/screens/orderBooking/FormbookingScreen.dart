@@ -1,22 +1,22 @@
-import 'dart:ui';
+
+import 'package:intl/intl.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:engaz/sharedWidgets.dart';
+import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:engaz/orderService/widgets_orders.dart';
+import 'package:engaz/Providers/orderProvider.dart';
+import 'package:engaz/core/components/order_data.dart';
+import 'package:engaz/core/components/booking_data.dart';
+import 'package:engaz/core/constants/sharedWidgets.dart';
 
-class orderServiceScreen extends StatefulWidget {
-  String? WorkerIamge, WorkerName;
-
-  orderServiceScreen([this.WorkerIamge, this.WorkerName]);
-
+class formBookingScreen extends StatefulWidget {
   @override
-  State<orderServiceScreen> createState() => _orderServiceScreenState();
+  State<formBookingScreen> createState() => _formBookingScreenState();
 }
 
-class _orderServiceScreenState extends State<orderServiceScreen> {
-  String? imageName;
+class _formBookingScreenState extends State<formBookingScreen> {
+  String? _imageName;
   final _picker = ImagePicker();
 
   Future<void> _getImage() async {
@@ -24,7 +24,38 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
         await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
-        imageName = pickedImage.name;
+        _imageName = pickedImage.name;
+      });
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+        String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate!);
+        _dateController.text = formattedDate.toString();
+      });
+    }
+  }
+
+  Future<void> _showTimePicker(BuildContext context) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      initialTime: TimeOfDay.now(),
+      context: context,
+    );
+    if (pickedTime != null && pickedTime != _selectedTime) {
+      setState(() {
+        _selectedTime = pickedTime;
+        String formattedTime = pickedTime.format(context); //output 10:51 PM;
+        _timeController.text = formattedTime.toString();
       });
     }
   }
@@ -39,15 +70,21 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
 
   TextEditingController _descriptioncontroller = TextEditingController();
 
+  TextEditingController _dateController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
+
   // TextEditingController _imagecontroller = TextEditingController();
-   String? selectedAddress ;
+  String? selectedAddress;
+  String? selectedService;
+  DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
   @override
   Widget build(BuildContext context) {
- 
+    var provider = Provider.of<OrdersProvider>(context, listen: true);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: myColor,
-          title: const Text('اطلب الان'),
+          title: const Text("احجزالان"),
           centerTitle: true,
         ),
         body: Container(
@@ -70,19 +107,6 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
             padding: const EdgeInsets.all(18.0),
             child: SingleChildScrollView(
               child: Column(children: [
-                // Image.asset('assets/images/teal_back.jpg'),
-                ClipOval(
-                    child: Image.asset(
-                  widget.WorkerIamge.toString(),
-                  width: 140, 
-                  height: 140, 
-                  fit: BoxFit.cover,
-                )),
-                Text(widget.WorkerName ?? 'نجار',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: WhiteColor,
-                          fontSize: 18,
-                        )),
                 const SizedBox(
                   height: 5,
                 ),
@@ -132,8 +156,10 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
                             const SizedBox(
                               height: 18,
                             ),
+                            // .................phone................
                             TextFormField(
                               keyboardType: TextInputType.phone,
+                              // ignore: non_constant_identifier_names
                               validator: (Value) {
                                 String? value = Value;
                                 if (value!.trim().isEmpty) {
@@ -153,8 +179,9 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
                             const SizedBox(
                               height: 18,
                             ),
+                            // .................city................
                             DropdownButtonFormField<String>(
-                             value: selectedAddress,
+                              value: selectedAddress,
                               onChanged: (newValue) {
                                 setState(() {
                                   selectedAddress = newValue!;
@@ -180,6 +207,7 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
                             const SizedBox(
                               height: 18,
                             ),
+                            // .................address................
                             TextFormField(
                               keyboardType: TextInputType.streetAddress,
                               validator: (Value) {
@@ -195,6 +223,62 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
                                 labelText: 'المركز -المنطقة',
                               ),
                             ),
+                            //.............. servicename..............
+                            DropdownButtonFormField<String>(
+                              value: selectedService,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  selectedService = newValue!;
+                                });
+                              },
+                              validator: (String? value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'من فضلك اختر المحافظه';
+                                }
+                                return null;
+                              },
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Iconsax.location),
+                                labelText: 'نوع الخدمة',
+                              ),
+                              items: ServicesWorkerNames.map(
+                                  (String? _serviceName) {
+                                return DropdownMenuItem<String>(
+                                  value: _serviceName,
+                                  child: Text(_serviceName!),
+                                );
+                              }).toList(),
+                            ),
+                            const SizedBox(
+                              height: 18,
+                            ),
+
+                            // .................date................
+                            TextFormField(
+                              controller: _dateController,
+                              readOnly: true,
+                              onTap: () {
+                                _selectDate(context);
+                              },
+                              decoration: const InputDecoration(
+                                labelText: "تاريخ الحجز",
+                                hintText: "اضغط لاختار التاريخ ",
+                                prefixIcon: Icon(Iconsax.calendar),
+                              ),
+                            ),
+                            // .................time................
+                            TextFormField(
+                                controller: _timeController,
+                                decoration: const InputDecoration(
+                                    prefixIcon: Icon(Iconsax.timer_pause),
+                                    labelText: "وقت الحجز"),
+                                readOnly:
+                                    true, //set it true, so that user will not able to edit text
+                                onTap: () async {
+                                  _showTimePicker(context);
+                                }),
+
+                            //...............discrption..............
                             const SizedBox(
                               height: 18,
                             ),
@@ -221,9 +305,11 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  '    ${imageName ?? "الرجاء رفع صورة المشكله       "}',
-                                  style: TextStyle(color: Colors.grey[700]),
+                                Expanded(
+                                  child: Text(
+                                    '    ${_imageName ?? "الرجاء رفع صورة المشكله       "}',
+                                    style: TextStyle(color: Colors.grey[700]),
+                                  ),
                                 ),
                                 IconButton(
                                     onPressed: _getImage,
@@ -236,20 +322,57 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
                             const SizedBox(
                               height: 18,
                             ),
-                            sendOrderButton(
-                                formKey: _formKey,
-                                widget: widget,
-                                Namecontroller: _Namecontroller,
-                                phonecontroller: _phonecontroller,
-                                addresscontroller: _addresscontroller,
-                                descriptioncontroller: _descriptioncontroller,
-                               // cityAdress,
-                               imageName:imageName,
+                            SizedBox(
+                              height: 40,
+                              width: 200,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: myColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        12), // Adjust the border radius as needed
+                                  ),
                                 ),
+                                onPressed: () {
+                                  print(Order.ordersList);
+                                  String DateNow =
+                                      DateFormat("dd-MM-yyyy /d hh:mm ")
+                                          .format(DateTime.now());
+                                  if (_formKey.currentState!.validate()) {
+                                    if (_imageName == null) {
+                                      showMissingImgAlarm(context);
+                                      print(_imageName);
+                                    } else {
+                                      provider.addBookinorder(BookingOrder(
+                                          orderId: "22",
+                                          orderName: selectedService,
+                                          orderDescription:
+                                              _descriptioncontroller.text,
+                                          orderDate: DateNow,
+                                          clientName: _Namecontroller.text,
+                                          BookingDate: _dateController.text,
+                                          BookingTime: _timeController.text,
+                                          clientPhone: _phonecontroller.text,
+                                          clientCity: selectedAddress,
+                                          fullAddress:
+                                              _addresscontroller.text));
+                                      showtoast(
+                                        context: context,
+                                        Message: 'تم اضافة الطلب بنجاح',
+                                        color: Colors.green[600],
+                                      );
+                                      Navigator.pop(
+                                        context,
+                                      );
+                                    }
+                                  }
+                                },
+                                child: const Text(' ارسال الطلب'),
+                              ),
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
-                          
                           ],
                         ),
                       )),
@@ -260,14 +383,3 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
         ));
   }
 }
-
-
-
-// addOrderToOrdersList({
-//   String? serviceName,
-//   String? clientName,
-//   String? clientPhone,
-//   String? clientAdress,
-//   String? clientDescription,
-// }) {}
-

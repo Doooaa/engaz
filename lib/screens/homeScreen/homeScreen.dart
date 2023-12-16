@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:engaz/sharedWidgets.dart';
-import 'package:engaz/homeScreen/homeScreenWidget.dart';
+import 'package:engaz/core/constants/sharedWidgets.dart';
+import 'package:engaz/screens/homeScreen/homeScreenWidget.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -10,7 +10,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 String searchQuery = '';
-
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: myColor,
                 ))
           ]),
-      backgroundColor:  Color.fromARGB(56, 245, 235, 235),
+      backgroundColor: Color.fromARGB(56, 245, 235, 235),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
@@ -60,13 +59,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+           
+          
+           // MyCarouselSlider(),
+            const SizedBox(height: 10,),
             Text("الخدمات المتاحة",
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w700,
                       fontSize: 20,
+                      //color: myColor
                     )),
             const SizedBox(
               height: 15,
@@ -96,8 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return Container(
-              height: 100,
-              width: 100,
+              height: 90,
+              width: 95,
               decoration: BoxDecoration(
                 color: index != 0 ? Colors.white : myColor,
                 borderRadius: BorderRadius.circular(15),
@@ -170,7 +171,7 @@ List<Widget> CategoryOfAllWokerList(BuildContext context) {
                                             .textTheme
                                             .bodyLarge
                                             ?.copyWith(
-                                             color: myColor,
+                                              color: myColor,
                                               fontSize: 10,
                                             )),
                                     Icon(
@@ -191,7 +192,7 @@ List<Widget> CategoryOfAllWokerList(BuildContext context) {
                   Container(
                       width: double.infinity,
                       height:
-                          180, // it doesn't work with singlechild if havn't size so we use container
+                          180, 
                       child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {

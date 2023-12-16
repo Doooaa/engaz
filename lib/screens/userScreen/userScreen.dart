@@ -1,6 +1,6 @@
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
-import 'package:engaz/sharedWidgets.dart';
+import 'package:engaz/core/constants/sharedWidgets.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});

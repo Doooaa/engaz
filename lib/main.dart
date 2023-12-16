@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:engaz/sharedWidgets.dart';
-import 'package:engaz/orderService/orderProvider.dart';
+import 'package:engaz/Providers/orderProvider.dart';
+import 'package:engaz/screens/onBoroadingScreen.dart';
 import 'package:engaz/homeLayout/shopLayout(home).dart';
+import 'package:engaz/core/constants/sharedWidgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
@@ -11,8 +12,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.teal,
               bottomNavigationBarTheme: BottomNavigationBarThemeData(
                 //unselectedLabelStyle: TextStyle(color: Colors.amber),
-              
+
                 elevation: 5,
                 selectedItemColor: myColor,
                 showSelectedLabels: true,
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
                 selectedIconTheme: IconThemeData(color: myColor),
               )),
           debugShowCheckedModeBanner: false,
-          home: const ShopLayout(),
+          home: const OnBoardingScreen(),
         ),
       ),
     );
