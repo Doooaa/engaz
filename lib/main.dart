@@ -3,7 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:engaz/Providers/orderProvider.dart';
 import 'package:engaz/screens/onBoroadingScreen.dart';
 import 'package:engaz/homeLayout/shopLayout(home).dart';
+import 'package:engaz/screens/login&Register/login.dart';
 import 'package:engaz/core/constants/sharedWidgets.dart';
+import 'package:engaz/screens/login&Register/login1.dart';
+import 'package:engaz/screens/login&Register/register.dart';
+import 'package:engaz/screens/login&Register/welcome_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
@@ -41,7 +45,13 @@ class MyApp extends StatelessWidget {
                 selectedIconTheme: IconThemeData(color: myColor),
               )),
           debugShowCheckedModeBanner: false,
-          home: const OnBoardingScreen(),
+          routes: {
+            '/':(context)=>HomeLayoutScreen(),
+            'welcome':(context) =>Welcome() ,
+            '/register':(context)=>Register(),
+            '/login':(context)=>LoginScreen(),
+          },
+          initialRoute: 'welcome' ,
         ),
       ),
     );

@@ -6,17 +6,22 @@ import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:engaz/Providers/orderProvider.dart';
 import 'package:engaz/core/components/order_data.dart';
-import 'package:engaz/core/components/booking_data.dart';
 import 'package:engaz/core/constants/sharedWidgets.dart';
 
+class CompanyFormScreen extends StatefulWidget {
+  String? CompanyImage, CompanyName;
 
-class formBookingScreen extends StatefulWidget {
+  CompanyFormScreen({
+    required this.CompanyImage,
+    required this.CompanyName,
+  });
+
   @override
-  State<formBookingScreen> createState() => _formBookingScreenState();
+  State<CompanyFormScreen> createState() => _CompanyFormScreenState();
 }
 
-class _formBookingScreenState extends State<formBookingScreen> {
-  String? _imageName;
+class _CompanyFormScreenState extends State<CompanyFormScreen> {
+  String? imageName;
   final _picker = ImagePicker();
 
   Future<void> _getImage() async {
@@ -24,38 +29,7 @@ class _formBookingScreenState extends State<formBookingScreen> {
         await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
-        _imageName = pickedImage.name;
-      });
-    }
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2023),
-      lastDate: DateTime(2100),
-    );
-
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-        String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate!);
-        _dateController.text = formattedDate.toString();
-      });
-    }
-  }
-
-  Future<void> _showTimePicker(BuildContext context) async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      initialTime: TimeOfDay.now(),
-      context: context,
-    );
-    if (pickedTime != null && pickedTime != _selectedTime) {
-      setState(() {
-        _selectedTime = pickedTime;
-        String formattedTime = pickedTime.format(context); //output 10:51 PM;
-        _timeController.text = formattedTime.toString();
+        imageName = pickedImage.name;
       });
     }
   }
@@ -70,21 +44,15 @@ class _formBookingScreenState extends State<formBookingScreen> {
 
   TextEditingController _descriptioncontroller = TextEditingController();
 
-  TextEditingController _dateController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
-
   // TextEditingController _imagecontroller = TextEditingController();
   String? selectedAddress;
-  String? selectedService;
-  DateTime? _selectedDate;
-  TimeOfDay? _selectedTime;
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<OrdersProvider>(context, listen: true);
+    OrdersProvider provider = Provider.of<OrdersProvider>(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: myColor,
-          title: const Text("احجزالان"),
+          title: const Text('اطلب الان'),
           centerTitle: true,
         ),
         body: Container(
@@ -107,6 +75,21 @@ class _formBookingScreenState extends State<formBookingScreen> {
             padding: const EdgeInsets.all(18.0),
             child: SingleChildScrollView(
               child: Column(children: [
+                Image.asset(
+                  widget.CompanyImage.toString(),
+                  width: 90,
+                  height: 90,
+                  // fit: BoxFit.cover,
+                ),
+                // Text(widget.CompanyName ?? 'شركه',
+                //     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                //           color: WhiteColor,
+                //           fontSize: 18,
+                //         )),
+                const SizedBox(
+                  height: 5,
+                ),
+                // Image.asset('assets/images/teal_back.jpg'),
                 const SizedBox(
                   height: 5,
                 ),
@@ -156,10 +139,8 @@ class _formBookingScreenState extends State<formBookingScreen> {
                             const SizedBox(
                               height: 18,
                             ),
-                            // .................phone................
                             TextFormField(
                               keyboardType: TextInputType.phone,
-                              // ignore: non_constant_identifier_names
                               validator: (Value) {
                                 String? value = Value;
                                 if (value!.trim().isEmpty) {
@@ -179,7 +160,6 @@ class _formBookingScreenState extends State<formBookingScreen> {
                             const SizedBox(
                               height: 18,
                             ),
-                            // .................city................
                             DropdownButtonFormField<String>(
                               value: selectedAddress,
                               onChanged: (newValue) {
@@ -207,7 +187,6 @@ class _formBookingScreenState extends State<formBookingScreen> {
                             const SizedBox(
                               height: 18,
                             ),
-                            // .................address................
                             TextFormField(
                               keyboardType: TextInputType.streetAddress,
                               validator: (Value) {
@@ -223,62 +202,6 @@ class _formBookingScreenState extends State<formBookingScreen> {
                                 labelText: 'المركز -المنطقة',
                               ),
                             ),
-                            //.............. servicename..............
-                            DropdownButtonFormField<String>(
-                              value: selectedService,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  selectedService = newValue!;
-                                });
-                              },
-                              validator: (String? value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'من فضلك اختر المحافظه';
-                                }
-                                return null;
-                              },
-                              decoration: const InputDecoration(
-                                prefixIcon: Icon(Iconsax.location),
-                                labelText: 'نوع الخدمة',
-                              ),
-                              items: ServicesWorkerNames.map(
-                                  (String? _serviceName) {
-                                return DropdownMenuItem<String>(
-                                  value: _serviceName,
-                                  child: Text(_serviceName!),
-                                );
-                              }).toList(),
-                            ),
-                            const SizedBox(
-                              height: 18,
-                            ),
-
-                            // .................date................
-                            TextFormField(
-                              controller: _dateController,
-                              readOnly: true,
-                              onTap: () {
-                                _selectDate(context);
-                              },
-                              decoration: const InputDecoration(
-                                labelText: "تاريخ الحجز",
-                                hintText: "اضغط لاختار التاريخ ",
-                                prefixIcon: Icon(Iconsax.calendar),
-                              ),
-                            ),
-                            // .................time................
-                            TextFormField(
-                                controller: _timeController,
-                                decoration: const InputDecoration(
-                                    prefixIcon: Icon(Iconsax.timer_pause),
-                                    labelText: "وقت الحجز"),
-                                readOnly:
-                                    true, //set it true, so that user will not able to edit text
-                                onTap: () async {
-                                  _showTimePicker(context);
-                                }),
-
-                            //...............discrption..............
                             const SizedBox(
                               height: 18,
                             ),
@@ -305,9 +228,12 @@ class _formBookingScreenState extends State<formBookingScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                const SizedBox(
+                                  width: 8,
+                                ),
                                 Expanded(
                                   child: Text(
-                                    '    ${_imageName ?? "الرجاء رفع صورة المشكله       "}',
+                                    '${imageName ?? "الرجاء رفع صورة المشكله"}',
                                     style: TextStyle(color: Colors.grey[700]),
                                   ),
                                 ),
@@ -336,35 +262,30 @@ class _formBookingScreenState extends State<formBookingScreen> {
                                 onPressed: () {
                                   print(Order.ordersList);
                                   String DateNow =
-                                      DateFormat("dd-MM-yyyy /d hh:mm ")
+                                      DateFormat("dd-MM-yyyy //d hh:mm aa")
                                           .format(DateTime.now());
                                   if (_formKey.currentState!.validate()) {
-                                    if (_imageName == null) {
+                                    if (imageName == null) {
                                       showMissingImgAlarm(context);
-                                      print(_imageName);
-                                    } else {
-                                      provider.addBookinorder(BookingOrder(
-                                          orderId: "22",
-                                          orderName: selectedService,
-                                          orderDescription:
-                                              _descriptioncontroller.text,
-                                          orderDate: DateNow,
-                                          clientName: _Namecontroller.text,
-                                          BookingDate: _dateController.text,
-                                          BookingTime: _timeController.text,
-                                          clientPhone: _phonecontroller.text,
-                                          clientCity: selectedAddress,
-                                          fullAddress:
-                                              _addresscontroller.text));
-                                      showtoast(
-                                        context: context,
-                                        Message: 'تم اضافة الطلب بنجاح',
-                                        color: Colors.green[600],
-                                      );
-                                      Navigator.pop(
-                                        context,
-                                      );
                                     }
+                                    provider.addorder(Order(
+                                        orderId: "22",
+                                        orderName: widget.CompanyName,
+                                        orderDescription:
+                                            _descriptioncontroller.text,
+                                        orderDate: DateNow,
+                                        clientName: _Namecontroller.text,
+                                        clientPhone: _phonecontroller.text,
+                                        clientCity: selectedAddress,
+                                        fullAddress: _addresscontroller.text));
+                                    showtoast(
+                                      context: context,
+                                      Message: 'تم اضافة الطلب بنجاح',
+                                      color: Colors.green[600],
+                                    );
+                                    Navigator.pop(
+                                      context,
+                                    );
                                   }
                                 },
                                 child: const Text(' ارسال الطلب'),

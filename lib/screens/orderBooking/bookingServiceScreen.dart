@@ -13,15 +13,19 @@ class BookingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Scaffoldcolor,
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
             MyCarouselSlider(),
+             const SizedBox(
+              height: 10,
+            ),
             Row(
               children: [
                 Text(
@@ -44,7 +48,7 @@ class BookingScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              width: 8,
+              width: 15,
             ),
             Row(
               children: [
@@ -55,13 +59,13 @@ class BookingScreen extends StatelessWidget {
                 Text("قائمة الحجز ",
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w700,
-                          fontSize: 20,
-                          //color: myColor
+                          fontSize: 18,
+                          color: const Color.fromARGB(255, 76, 73, 73)
                         )),
               ],
             ),
             const SizedBox(
-              width: 5,
+              width: 10,
             ),
             Consumer<OrdersProvider>(
               builder: (context, provider, child) {
