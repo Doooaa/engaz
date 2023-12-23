@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:engaz/Providers/orderProvider.dart';
-import 'package:engaz/screens/onBoroadingScreen.dart';
 import 'package:engaz/homeLayout/shopLayout(home).dart';
 import 'package:engaz/screens/login&Register/login.dart';
 import 'package:engaz/core/constants/sharedWidgets.dart';
-import 'package:engaz/screens/login&Register/login1.dart';
 import 'package:engaz/screens/login&Register/register.dart';
 import 'package:engaz/screens/login&Register/welcome_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -46,12 +44,12 @@ class MyApp extends StatelessWidget {
               )),
           debugShowCheckedModeBanner: false,
           routes: {
-            '/':(context)=>HomeLayoutScreen(),
-            'welcome':(context) =>Welcome() ,
-            '/register':(context)=>Register(),
-            '/login':(context)=>LoginScreen(),
+            '/': (context) => HomeLayoutScreen(),
+            'welcome': (context) => Welcome(),
+            '/register': (context) => Register(),
+            '/login': (context) => loginScreen(),
           },
-          initialRoute: 'welcome' ,
+          initialRoute: 'welcome',
         ),
       ),
     );
