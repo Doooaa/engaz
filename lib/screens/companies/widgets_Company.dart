@@ -25,7 +25,7 @@ class GridItem extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
-            color: myColor,
+            color: Color.fromARGB(184, 0, 151, 136),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

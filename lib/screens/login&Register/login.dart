@@ -5,117 +5,8 @@ import 'package:engaz/screens/login&Register/register.dart';
 import 'package:engaz/screens/homeLayout/shopLayout(home).dart';
 
 final _formKey = GlobalKey<FormState>();
-// import 'package:flutter/material.dart';
-// import 'package:engaz/core/constants/sharedWidgets.dart';
-
-// class LoginScreen extends StatefulWidget {
-//   @override
-//   _LoginScreenState createState() => _LoginScreenState();
-// }
-
-// class _LoginScreenState extends State<LoginScreen> {
-//   final _formKey = GlobalKey<FormState>();
-//   late String _username;
-//   late String _password;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Size size = MediaQuery.of(context).size;
-//     double viewInset = MediaQuery.of(context)
-//         .viewInsets
-//         .bottom; // we are using this to determine Keyboard is opened or not
-//     double defaultLoginSize = size.height - (size.height * 0.2);
-//     double defaultRegisterSize = size.height - (size.height * 0.1);
-//     return Scaffold(
-//       body: Container(
-//         decoration: BoxDecoration(
-//             image: DecorationImage(
-//                 image: AssetImage('assets/images/login&register/light-1.png'))),
-//         padding: EdgeInsets.all(16.0),
-//         child: Center(
-//           child: SingleChildScrollView(
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               crossAxisAlignment: CrossAxisAlignment.stretch,
-//               children: [
-//                 Container(
-//                   height: MediaQuery.sizeOf(context).height * 0.2,
-//                   decoration: BoxDecoration(
-//                       image: DecorationImage(
-//                           image: AssetImage(
-//                     'assets/images/enjez.png',
-//                   ))),
-//                 ),
-
-//                 const SizedBox(height: 32.0),
-//                 Form(
-//                   key: _formKey,
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Column(
-//                       children: [
-//                         TextFormField(
-//                           decoration: const InputDecoration(
-//                               border: InputBorder.none,
-//                             hintText: 'اسم المستخدم ',
-//                             prefixIcon: Icon(Iconsax.user),
-//                           ),
-//                           validator: (value) {
-//                             if (value == null || value.isEmpty) {
-//                               return '  من فضلك ادخل الاسم   ';
-//                             }
-//                             return null;
-//                           },
-//                           onSaved: (value) {
-//                             _username = value!;
-//                           },
-//                         ),
-//                         const SizedBox(height: 16.0),
-//                         TextFormField(
-//                           decoration: const InputDecoration(
-//                             hintText: 'كلمة المرور',
-//                             prefixIcon: Icon(Iconsax.lock),
-//                           ),
-//                           obscureText: true,
-//                           validator: (value) {
-//                             if (value == null || value.isEmpty) {
-//                               return  '  من فضلك ادخل كلمة المرور';
-//                             }
-//                             return null;
-//                           },
-//                           onSaved: (value) {
-//                             _password = value!;
-//                           },
-//                         ),
-//                         const SizedBox(height: 32.0),
-//                         ElevatedButton(
-//                           onPressed: () {
-//                             _submitForm();
-//                           },
-//                           child: Text('تسجيل دخول'),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-void _submitForm() {
-  if (_formKey.currentState!.validate()) {
-    _formKey.currentState!.save();
-    // Process login with _username and _password
-    print('Login successful! Username: $_username, Password: $_password');
-  }
-}
-
-late String _username;
-late String _password;
+TextEditingController _Namecontroller = TextEditingController();
+TextEditingController _passwordController = TextEditingController();
 
 class loginScreen extends StatelessWidget {
   const loginScreen({Key? key}) : super(key: key);
@@ -166,9 +57,10 @@ class loginScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(
-                          height: 50,
+                          height: 100,
                         ),
                         TextFormField(
+                          controller: _Namecontroller,
                           decoration: const InputDecoration(
                             hintText: 'اسم المستخدم ',
                             prefixIcon: Icon(Iconsax.user),
@@ -179,12 +71,10 @@ class loginScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          onSaved: (value) {
-                            _username = value!;
-                          },
                         ),
                         const SizedBox(height: 10.0),
                         TextFormField(
+                          controller: _passwordController,
                           decoration: const InputDecoration(
                             hintText: 'كلمة المرور',
                             prefixIcon: Icon(Iconsax.lock),
@@ -195,9 +85,6 @@ class loginScreen extends StatelessWidget {
                               return '  من فضلك ادخل كلمة المرور';
                             }
                             return null;
-                          },
-                          onSaved: (value) {
-                            _password = value!;
                           },
                         ),
                         const SizedBox(height: 35.0),
@@ -214,10 +101,10 @@ class loginScreen extends StatelessWidget {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              _submitForm();
+                           
                               if (_formKey.currentState!.validate()) {
                                 {
-                                  
+
                                   navigateToAndRemove(
                                       context, HomeLayoutScreen());
                                 }
@@ -243,6 +130,7 @@ class loginScreen extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
+                                
                                 navigateToAndRemove(context, Register());
                               },
                               child: Text(

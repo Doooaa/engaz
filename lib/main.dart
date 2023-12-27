@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:engaz/screens/splash_screen.dart';
 import 'package:engaz/Providers/orderProvider.dart';
 import 'package:engaz/homeLayout/shopLayout(home).dart';
 import 'package:engaz/screens/login&Register/login.dart';
 import 'package:engaz/core/constants/sharedWidgets.dart';
 import 'package:engaz/screens/login&Register/register.dart';
-import 'package:engaz/screens/login&Register/welcome_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
@@ -45,11 +45,11 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routes: {
             '/': (context) => HomeLayoutScreen(),
-            'welcome': (context) => Welcome(),
+            'Splash_screen': (context) => Splash_screen(),
             '/register': (context) => Register(),
             '/login': (context) => loginScreen(),
           },
-          initialRoute: 'welcome',
+          initialRoute: 'Splash_screen',
         ),
       ),
     );

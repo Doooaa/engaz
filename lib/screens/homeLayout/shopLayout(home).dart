@@ -2,6 +2,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:engaz/screens/userScreen/userScreen.dart';
 import 'package:engaz/screens/homeScreen/homeScreen.dart';
+import 'package:engaz/screens/companies/companies_Screen.dart';
 import 'package:engaz/screens/InCard/Orders_items_Screen.dart';
 import 'package:engaz/screens/orderBooking/bookingServiceScreen.dart';
 
@@ -36,6 +37,11 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
                   Iconsax.home,
                 )),
             NavigationDestination(
+                label: ' الشركات',
+                icon: Icon(
+                  Iconsax.category,
+                )),
+            NavigationDestination(
                 label: "الحجز المسبق",
                 icon: Icon(
                   Iconsax.ticket,
@@ -63,6 +69,7 @@ const TextStyle optionStyle =
     TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.grey);
 List<Widget> Screen = const [
   MyHomePage(),
+  Company_Screen(),
   BookingScreen(),
   UserOrdersItemsScreen(),
   UserScreen(),
