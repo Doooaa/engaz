@@ -11,7 +11,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 void main() {
   runApp(const MyApp());
 }
-
+//  StatelessWidget;
+//  statefullwidget;
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -33,12 +34,9 @@ class MyApp extends StatelessWidget {
               fontFamily: 'RB',
               primarySwatch: Colors.teal,
               bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                //unselectedLabelStyle: TextStyle(color: Colors.amber),
-
                 elevation: 5,
                 selectedItemColor: myColor,
                 showSelectedLabels: true,
-                //   unselectedItemColor: Colors.grey,
                 unselectedIconTheme: const IconThemeData(color: Colors.grey),
                 selectedIconTheme: IconThemeData(color: myColor),
               )),

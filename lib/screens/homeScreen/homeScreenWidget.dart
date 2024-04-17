@@ -3,79 +3,88 @@ import 'package:flutter/material.dart';
 import 'package:engaz/core/constants/sharedWidgets.dart';
 import 'package:engaz/screens/InCard/form_order_Services.dart';
 
-
 Widget workerBox(context, indexlist, index, ListofAllCurrenWorkers) {
-  return SizedBox(
-    height: 180,
-    width: 150,
-    child: Stack(
-      alignment: Alignment.bottomLeft,
-      children: [
-        Container(
-          height: 170,
-          width: 150,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            image: DecorationImage(
-              image: AssetImage(
-                ListofAllCurrenWorkers[indexlist][index]['image'].toString(),
+  return InkWell(
+    onTap: () {
+      navigateToScreen(
+          context,
+          orderServiceScreen(
+            ListofAllCurrenWorkers[indexlist][index]['image'].toString(),
+            ListofAllCurrenWorkers[indexlist][index]['name'].toString(),
+          ));
+    },
+    child: SizedBox(
+      height: 180,
+      width: 150,
+      child: Stack(
+        alignment: Alignment.bottomLeft,
+        children: [
+          Container(
+            height: 170,
+            width: 150,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: AssetImage(
+                  ListofAllCurrenWorkers[indexlist][index]['image'].toString(),
+                ),
+                fit: BoxFit.cover,
               ),
-              fit: BoxFit.cover,
             ),
           ),
-        ),
-        Positioned(
-            top: 0,
-            right: -10,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft:
-                    Radius.circular(30.0), // Adjust the border radius as needed
-                bottomLeft: Radius.circular(30.0),
-              ),
-              child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: myColor,
-                  ),
-                  onPressed: () {
-                    navigateToScreen(
-                        context,
-                        orderServiceScreen(
-                          ListofAllCurrenWorkers[indexlist][index]['image']
-                              .toString(),
-                          ListofAllCurrenWorkers[indexlist][index]['name']
-                              .toString(),
-                        ));
-                  },
-                  icon: const Icon(Icons.send),
-                  label: const Text('اطلب')),
-            )),
-        Container(
-          width: 150,
-          height: 30,
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 242, 200, 73),
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(
-                    15,
-                  ),
-                  bottomRight: Radius.circular(15))),
+          Positioned(
+              top: 0,
+              right: -10,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(
+                      30.0), // Adjust the border radius as needed
+                  bottomLeft: Radius.circular(30.0),
+                ),
+                child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: myColor,
+                    ),
+                    onPressed: () {
+                      navigateToScreen(
+                          context,
+                          orderServiceScreen(
+                            ListofAllCurrenWorkers[indexlist][index]['image']
+                                .toString(),
+                            ListofAllCurrenWorkers[indexlist][index]['name']
+                                .toString(),
+                          ));
+                    },
+                    icon: const Icon(Icons.send,color: Colors.white,),
+                    label: const Text('اطلب',style: TextStyle(color: Colors.white),)),
+              )),
+          Container(
+            width: 150,
+            height: 30,
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 242, 200, 73),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(
+                      15,
+                    ),
+                    bottomRight: Radius.circular(15))),
 
-          //Color.fromARGB(190, 90, 192, 223),//Color.fromARGB(255, 200, 183, 123), //Color.fromARGB(122, 112, 109, 109),
-          child: Center(
-            child: Text(
-              ListofAllCurrenWorkers[indexlist][index]['name'].toString(),
-              style: const TextStyle(
-                  overflow: TextOverflow.ellipsis,
-                  color: Colors.white,
-                  fontSize: 14),
-              maxLines: 1,
-              textAlign: TextAlign.center,
+            //Color.fromARGB(190, 90, 192, 223),//Color.fromARGB(255, 200, 183, 123), //Color.fromARGB(122, 112, 109, 109),
+            child: Center(
+              child: Text(
+                ListofAllCurrenWorkers[indexlist][index]['name'].toString(),
+                style: const TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    color: Colors.white,
+                    fontSize: 14),
+                maxLines: 1,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
@@ -130,8 +139,7 @@ List<List<Map<String, String>>> imagesHomeRepairementList = [
       'image': 'assets/images/homeRepaire1.jpg',
       'name': 'نقاش' //'painter' //نقاش
     },
-    {   
-       
+    {
       'image': 'assets/images/homeRepaire3.jpg',
       'name': 'نجار' //'carpenter' //نجار
     },
@@ -166,4 +174,3 @@ List<List<Map<String, String>>> imagesHomeRepairementList = [
     },
   ],
 ];
-

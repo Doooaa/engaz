@@ -18,6 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text("انجز",
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.w700,
+                   
                     fontSize: 20,
                   )),
           backgroundColor: Colors.transparent,
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //searchQuery.trim().isNotEmpty
             Column(
               children: CategoryOfAllWokerList(context),
-            )
+            ),
           ],
         ),
       ),

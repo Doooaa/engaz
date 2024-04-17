@@ -10,11 +10,12 @@ class Splash_screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return  AnimatedSplashScreen(
       duration: 1000,
-      splash: Image.asset('assets/images/enjez.png'),
+      splash: Image.asset('assets/images/engz.png'),
       nextScreen: loginScreen(),
+      splashIconSize: 150,
       splashTransition: SplashTransition.fadeTransition,
       backgroundColor: Colors.white,
-     
+
     );
   }
 }

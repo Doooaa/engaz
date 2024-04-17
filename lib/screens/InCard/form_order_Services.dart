@@ -50,7 +50,7 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: myColor,
-          title: const Text('اطلب الان'),
+          title: const Text('اطلب الان',),
           centerTitle: true,
         ),
         body: Container(
@@ -284,7 +284,7 @@ class _orderServiceScreenState extends State<orderServiceScreen> {
                                     );
                                   }
                                 },
-                                child: const Text(' ارسال الطلب'),
+                                child: const Text(' ارسال الطلب',style: TextStyle( color: Colors.white,),),
                               ),
                             ),
                             const SizedBox(

@@ -81,15 +81,11 @@ class _CompanyFormScreenState extends State<CompanyFormScreen> {
                   height: 90,
                   // fit: BoxFit.cover,
                 ),
-                // Text(widget.CompanyName ?? 'شركه',
-                //     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                //           color: WhiteColor,
-                //           fontSize: 18,
-                //         )),
+               
                 const SizedBox(
                   height: 5,
                 ),
-                // Image.asset('assets/images/teal_back.jpg'),
+               
                 const SizedBox(
                   height: 5,
                 ),

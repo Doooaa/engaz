@@ -24,7 +24,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
         bottomNavigationBar: NavigationBar(
           height: 75,
           backgroundColor: Colors.white,
-          //indicatorColor: Colors.amber, selcted icon
+          indicatorColor: Color.fromARGB(145, 77, 170, 150),
 
           animationDuration: Duration(milliseconds: 1100),
           onDestinationSelected: (index) => setState(() {

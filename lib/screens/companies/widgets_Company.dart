@@ -1,6 +1,4 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:engaz/core/constants/sharedWidgets.dart';
 import 'package:engaz/screens/companies/form_company.dart';
 
 class GridItem extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
+import 'package:engaz/screens/userScreen/contactUs.dart';
 import 'package:engaz/core/constants/sharedWidgets.dart';
 
 class UserScreen extends StatelessWidget {
@@ -156,24 +157,36 @@ class UserScreen extends StatelessWidget {
 
                     ///////////////
                     RowUseritems(
-                      icon: Iconsax.lovely,
-                      label: 'المفضلة',
+                      icon: Icons.contact_support,
+                      label: 'تواصل معنا',
+                      fun: (){
+                          navigateToScreen(context, ContactUs());
+                      },
                     ),
                     ///////////////
 
                     RowUseritems(
                       icon: Iconsax.money_send,
                       label: 'طريقة الدفع',
+                       fun: (){
+
+                      },
                     ),
                     ///////////////
                     RowUseritems(
                       icon: Icons.people,
                       label: "ارسل لاصدقائك",
+                       fun: (){
+
+                      },
                     ),
 
                     RowUseritems(
                       icon: Iconsax.setting_24,
                       label: 'الاعدادات',
+                       fun: (){
+
+                      },
                     ),
                     ///////////////
                     const mydividor(),
@@ -228,9 +241,10 @@ class RowUseritems extends StatelessWidget {
   RowUseritems({
     super.key,
     required this.icon,
-    required this.label,
+    required this.label, required this.fun,
+  
   });
-
+  final void Function() fun;
   final IconData icon;
   final String label;
 
@@ -267,9 +281,7 @@ class RowUseritems extends StatelessWidget {
               color: myColor,
               grade: 20,
             ),
-            onPressed: () {
-              print("obje");
-            },
+            onPressed: fun,
           ),
         ],
       ),
